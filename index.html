@@ -1,0 +1,1413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Finnegan Flooring — Floor Screeding Contractors, South Coast</title>
+<meta name="description" content="Finnegan Flooring are one of the south coast's leading floor screeding contractors, specialising in sand/cement, anhydrite and fast/rapid drying screeds." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --bg: #efeae0;        /* warm concrete cream */
+    --bg-2: #e6e0d3;      /* slightly darker cream for alternating sections */
+    --ink: #14130f;       /* near-black */
+    --ink-2: #2a2722;
+    --mute: #6a6459;      /* warm grey */
+    --line: #b9b1a0;      /* hairline color on cream */
+    --line-dim: #d6cfbf;
+    --accent: oklch(0.58 0.15 40); /* rust */
+    --accent-ink: #ffffff;
+    --dark: #14130f;
+    --dark-2: #1c1a15;
+    --on-dark: #efeae0;
+    --on-dark-mute: #8a8579;
+    --on-dark-line: #2a2722;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Subtle paper-grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: radial-gradient(rgba(20,19,15,0.035) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .display { font-family: 'Space Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 20px; }
+  }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px) saturate(1.05);
+    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    background: color-mix(in oklab, var(--bg) 78%, transparent);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s ease, background .25s ease;
+  }
+  .nav.scrolled { border-bottom-color: var(--line-dim); }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 28px; height: 28px;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 2px;
+  }
+  .brand-name { line-height: 1; }
+  .brand-name small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--mute);
+    margin-top: 4px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 14px;
+  }
+  .nav-links a {
+    color: var(--ink-2);
+    transition: color .15s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 16px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .15s, color .15s;
+  }
+  .nav-links a.nav-cta:hover { background: var(--accent); color: var(--accent-ink); }
+  .nav-cta .dot {
+    width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
+  }
+  .nav-cta:hover .dot { background: var(--bg); box-shadow: 0 0 0 3px color-mix(in oklab, var(--bg) 30%, transparent); }
+
+  .nav-mobile-toggle { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
+  .nav-mobile-toggle span {
+    display: block; width: 22px; height: 1.5px; background: var(--ink); margin: 5px 0; transition: transform .25s;
+  }
+
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .nav-mobile-toggle { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 68px; left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line-dim);
+      padding: 20px 32px 24px;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .nav-links.open .nav-cta { margin-top: 4px; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 140px 0 80px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero { padding: 110px 0 60px; }
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--mute);
+    margin-bottom: 28px;
+  }
+  .eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--mute);
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(48px, 7.5vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    margin: 0 0 28px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .hero h1 .accent { color: var(--accent); font-style: italic; font-weight: 400; }
+  .hero-sub {
+    font-size: clamp(16px, 1.4vw, 19px);
+    color: var(--ink-2);
+    max-width: 52ch;
+    margin: 0 0 36px;
+    line-height: 1.5;
+  }
+  .hero-meta {
+    display: flex; gap: 36px; flex-wrap: wrap;
+    margin-top: 12px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line-dim);
+  }
+  .hero-meta-item {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .hero-meta-item .v {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .hero-meta-item .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  /* Hero image — placeholder */
+  .hero-img {
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--line);
+    background:
+      repeating-linear-gradient(135deg,
+        transparent 0, transparent 14px,
+        rgba(20,19,15,0.04) 14px, rgba(20,19,15,0.04) 15px),
+      linear-gradient(180deg, #d8d0bd 0%, #c9c0aa 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-img::after {
+    content: '◣ photo: poured anhydrite slab, in-situ';
+    position: absolute;
+    bottom: 14px; left: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--bg);
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+  }
+  .hero-img-tag {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- Ticker (capabilities marquee) ---------- */
+  .ticker {
+    border-top: 1px solid var(--line-dim);
+    border-bottom: 1px solid var(--line-dim);
+    overflow: hidden;
+    padding: 18px 0;
+    background: var(--bg);
+  }
+  .ticker-track {
+    display: flex;
+    gap: 56px;
+    white-space: nowrap;
+    animation: ticker 40s linear infinite;
+    width: max-content;
+  }
+  .ticker span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    color: var(--ink-2);
+    letter-spacing: -0.01em;
+    display: inline-flex; align-items: center; gap: 56px;
+  }
+  .ticker span::after {
+    content: '✦';
+    color: var(--accent);
+    font-size: 14px;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ---------- Section primitives ---------- */
+  section { position: relative; z-index: 2; }
+  .section { padding: 120px 0; }
+  @media (max-width: 720px) { .section { padding: 80px 0; } }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .section-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--mute);
+    display: flex; flex-direction: column; gap: 8px;
+    padding-top: 14px;
+  }
+  .section-num .bar {
+    width: 40px; height: 1px; background: var(--ink);
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .section-title .accent { color: var(--accent); font-style: italic; font-weight: 400;}
+  .section-lede {
+    margin-top: 20px;
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 56ch;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 960px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
+
+  .service {
+    background: var(--bg);
+    padding: 32px 28px 32px;
+    display: flex; flex-direction: column;
+    min-height: 320px;
+    position: relative;
+    transition: background .25s ease;
+  }
+  .service:hover { background: var(--bg-2); }
+  .service-idx {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--mute);
+    margin-bottom: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .service-idx .pill {
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    color: var(--ink-2);
+    background: var(--bg);
+  }
+  .service-icon {
+    width: 36px; height: 36px;
+    margin-bottom: 24px;
+    color: var(--accent);
+  }
+  .service h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .service p {
+    color: var(--mute);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+  .service-meta {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-dim);
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+    text-transform: uppercase;
+  }
+  .service-meta .v { color: var(--ink); }
+
+  .also-row {
+    margin-top: 28px;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--line-dim);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .also-row { grid-template-columns: 1fr; gap: 12px; }
+  }
+  .also-row p {
+    font-size: 18px;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+  .also-row p strong { color: var(--ink); font-weight: 500; }
+
+  /* ---------- ABOUT (dark) ---------- */
+  .about {
+    background: var(--dark);
+    color: var(--on-dark);
+    margin: 0;
+  }
+  .about::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(239,234,224,0.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+  }
+  .about .section-num { color: var(--on-dark-mute); }
+  .about .section-num .bar { background: var(--on-dark); }
+  .about .section-title { color: var(--on-dark); }
+  .about .section-lede { color: var(--on-dark-mute); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .about-grid .label-col {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--on-dark-mute);
+    text-transform: uppercase;
+    padding-top: 14px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .about-grid .label-col .bar { width: 40px; height: 1px; background: var(--on-dark); }
+
+  .about-body p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin: 0 0 24px;
+    color: var(--on-dark);
+    text-wrap: pretty;
+  }
+  .about-body p.small {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--on-dark-mute);
+    letter-spacing: 0;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--on-dark-line);
+    border: 1px solid var(--on-dark-line);
+  }
+  .about-stat {
+    background: var(--dark);
+    padding: 24px 20px;
+  }
+  .about-stat .v {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--on-dark);
+    line-height: 1;
+  }
+  .about-stat .v sup {
+    font-size: 16px;
+    color: var(--accent);
+    vertical-align: super;
+    margin-left: 4px;
+  }
+  .about-stat .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--on-dark-mute);
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+
+  /* ---------- ACCREDITATIONS ---------- */
+  .accred-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 32px;
+  }
+  @media (max-width: 760px) { .accred-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .accred {
+    background: var(--bg);
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 18px;
+    min-height: 200px;
+    justify-content: space-between;
+    transition: background .25s;
+  }
+  .accred:hover { background: var(--bg-2); }
+  .accred-logo {
+    height: 56px;
+    display: flex; align-items: center;
+  }
+  .accred-logo svg, .accred-logo .glyph {
+    height: 100%;
+  }
+  .accred-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .accred-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .accred a {
+    margin-top: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .accred a:hover { color: var(--ink); }
+
+  /* Bespoke accreditation glyphs */
+  .glyph-chas {
+    width: 90px; height: 56px;
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    background: var(--accent);
+    color: white;
+  }
+  .glyph-cline {
+    width: 110px; height: 56px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .glyph-cline .cl-bar {
+    width: 8px; height: 56px; background: var(--accent);
+  }
+  .glyph-cline .cl-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .glyph-cline .cl-text small {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--mute);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .glyph-smas {
+    width: 90px; height: 56px;
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .glyph-ssip {
+    width: 110px; height: 56px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .glyph-ssip .ring {
+    width: 40px; height: 40px;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    border-right-color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+  .glyph-ssip .t {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .glyph-ssip .t small {
+    display: block; font-size: 9px; font-weight: 400; letter-spacing: 0.1em;
+    color: var(--mute); margin-top: 4px;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-list {
+    border-top: 1px solid var(--line);
+  }
+  .project-row {
+    display: grid;
+    grid-template-columns: 64px 1fr 1fr 100px;
+    gap: 24px;
+    align-items: center;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line-dim);
+    transition: padding .3s, background .3s;
+    cursor: default;
+    position: relative;
+  }
+  .project-row:hover {
+    padding-left: 12px;
+    padding-right: 12px;
+    background: var(--bg-2);
+  }
+  .project-row:hover .pr-arrow { transform: translateX(4px); color: var(--accent); }
+  @media (max-width: 760px) {
+    .project-row {
+      grid-template-columns: 40px 1fr;
+      grid-template-rows: auto auto;
+      gap: 4px 16px;
+      padding: 20px 0;
+    }
+    .project-row .pr-loc { grid-column: 2; color: var(--mute); }
+    .project-row .pr-sector { display: none; }
+    .project-row .pr-arrow { display: none; }
+  }
+  .pr-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+  }
+  .pr-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(20px, 2vw, 26px);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .pr-loc {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .pr-sector {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .pr-arrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    text-align: right;
+    color: var(--ink);
+    transition: transform .25s, color .25s;
+  }
+
+  /* ---------- CLIENTS ---------- */
+  .clients {
+    background: var(--bg-2);
+  }
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  @media (max-width: 860px) { .clients-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 520px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
+  .client {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 32px 20px;
+    min-height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    transition: background .25s;
+    position: relative;
+  }
+  .client:hover { background: var(--bg); }
+  .client-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .client-idx {
+    position: absolute;
+    top: 10px; left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact {
+    background: var(--dark);
+    color: var(--on-dark);
+  }
+  .contact .section-num { color: var(--on-dark-mute); }
+  .contact .section-num .bar { background: var(--on-dark); }
+  .contact .section-title { color: var(--on-dark); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .contact-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--on-dark-mute);
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0 0 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--on-dark-line);
+  }
+  .contact-big {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(28px, 3.5vw, 44px);
+    letter-spacing: -0.025em;
+    color: var(--on-dark);
+    line-height: 1.05;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 8px;
+    transition: color .2s;
+  }
+  .contact-big:hover { color: var(--accent); }
+  .contact-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--on-dark-mute);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .contact-address {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--on-dark);
+    margin: 0;
+    font-style: normal;
+  }
+  .contact-address strong {
+    color: var(--on-dark);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .cta-row {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--on-dark-line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .cta-row .cta-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(22px, 2.5vw, 32px);
+    letter-spacing: -0.02em;
+    color: var(--on-dark);
+    line-height: 1.1;
+    max-width: 22ch;
+  }
+  .cta-row .cta-text .accent { color: var(--accent); font-style: italic; font-weight: 400; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--accent);
+    color: white;
+    padding: 18px 26px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    border: 0;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  .cta-btn:hover { background: var(--on-dark); color: var(--accent); }
+  .cta-btn svg { width: 16px; height: 16px; }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    background: var(--dark-2);
+    color: var(--on-dark-mute);
+    padding: 32px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  /* ---------- intersection reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">FF</span>
+      <span class="brand-name">Finnegan Flooring
+        <small>Est. 1997 · Romsey, Hampshire</small>
+      </span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#accreditations">Accreditations</a>
+      <a href="#projects">Projects</a>
+      <a href="#clients">Clients</a>
+      <a href="#contact" class="nav-cta"><span class="dot"></span>Get a quote</a>
+    </nav>
+    <button class="nav-mobile-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow mono">South Coast · Floor Screeding Contractors</div>
+        <h1>Floors that <span class="accent">set the standard</span> for everything built on top.</h1>
+        <p class="hero-sub">Finnegan Flooring are one of the south coast's leading floor screeding contractors, specialising in sand/cement, anhydrite and fast/rapid drying screeds — for sites from a small extension to a new-build school.</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="v">28</span>
+            <span class="l">Years trading</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="v">4</span>
+            <span class="l">Screed systems</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="v">CSCS</span>
+            <span class="l">Carded workforce</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="v">SSIP</span>
+            <span class="l">Accredited</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-img" role="img" aria-label="Photo placeholder">
+        <span class="hero-img-tag">REF · 01 / SITE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Capability ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Sand/Cement Screeds</span>
+    <span>Anhydrite Screeds</span>
+    <span>Rapid-Setting Floors</span>
+    <span>Gas Membranes</span>
+    <span>Damp-Proof Membranes</span>
+    <span>Thermal Insulation</span>
+    <span>Acoustic Insulation</span>
+    <span>Sand/Cement Screeds</span>
+    <span>Anhydrite Screeds</span>
+    <span>Rapid-Setting Floors</span>
+    <span>Gas Membranes</span>
+    <span>Damp-Proof Membranes</span>
+    <span>Thermal Insulation</span>
+    <span>Acoustic Insulation</span>
+  </div>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">
+        <span class="bar"></span>
+        <span>01 — Services</span>
+      </div>
+      <div>
+        <h2 class="section-title">Four screed systems, <span class="accent">one specialist crew.</span></h2>
+        <p class="section-lede">We specify, pump and finish the right screed for the build programme — pumped or hand-laid, traditional or rapid, bonded or floating.</p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <article class="service reveal">
+        <div class="service-idx"><span>S/01</span><span class="pill">Pumped</span></div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="22" width="32" height="14"/><path d="M4 22 L20 8 L36 22"/><circle cx="20" cy="29" r="3"/></svg>
+        <h3>Pumped traditional sand/cement screed</h3>
+        <p>The bread-and-butter system for large floor areas. Pumped on-site for speed, consistency and access to tight or upper-floor pours.</p>
+        <div class="service-meta">
+          <span>Type</span><span class="v">Traditional</span>
+        </div>
+      </article>
+
+      <article class="service reveal">
+        <div class="service-idx"><span>S/02</span><span class="pill">Hand-laid</span></div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="14" width="28" height="14"/><path d="M6 28 L34 28 L30 34 L10 34 Z"/><path d="M14 14 L14 28 M20 14 L20 28 M26 14 L26 28"/></svg>
+        <h3>Ready-mixed traditional sand/cement screed</h3>
+        <p>Site-delivered ready-mixed screed for measured areas and detail work where pumped delivery isn't required.</p>
+        <div class="service-meta">
+          <span>Type</span><span class="v">Traditional</span>
+        </div>
+      </article>
+
+      <article class="service reveal">
+        <div class="service-idx"><span>S/03</span><span class="pill">Flowing</span></div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 26 Q12 18 20 26 T36 26"/><path d="M4 32 Q12 24 20 32 T36 32"/><circle cx="12" cy="10" r="2"/><circle cx="20" cy="8" r="2"/><circle cx="28" cy="10" r="2"/></svg>
+        <h3>Anhydrite screed</h3>
+        <p>Self-levelling calcium-sulphate screed — laid thinner, faster and flatter than traditional. Ideal over underfloor heating.</p>
+        <div class="service-meta">
+          <span>Type</span><span class="v">Calcium-Sulphate</span>
+        </div>
+      </article>
+
+      <article class="service reveal">
+        <div class="service-idx"><span>S/04</span><span class="pill">Rapid</span></div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 4 L8 22 L18 22 L14 36 L32 16 L22 16 Z"/></svg>
+        <h3>Fast drying &amp; rapid setting screed</h3>
+        <p>For programmes where every day on the critical path counts. Foot-traffic and floor finishes in a fraction of the time.</p>
+        <div class="service-meta">
+          <span>Type</span><span class="v">Rapid Cure</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="also-row reveal">
+      <div class="mono" style="color:var(--mute); padding-top:6px;">+ Also installed</div>
+      <p>Our experienced workforce are also competent with installation of <strong>gas membranes</strong>, <strong>damp-proof membranes</strong> along with <strong>thermal and acoustic insulations.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT (dark) ============ -->
+<section class="section about" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">
+        <span class="bar"></span>
+        <span>02 — About</span>
+      </div>
+      <div>
+        <h2 class="section-title">Founded in 1997. <br/><span class="accent">Reputation built pour by pour.</span></h2>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="label-col">
+        <span class="bar"></span>
+        <span>The Company</span>
+      </div>
+      <div class="about-body reveal">
+        <p>Finnegan Flooring Limited was founded in 1997 by Managing Director <em style="font-style: italic; color: var(--accent);">Andy Finnegan</em>. As one of the south coast's leading floor screeding contractors, we've acquired a high-standard reputation through expertise and experience that have led to a constantly growing client base.</p>
+        <p class="small">Andy has a reliable management team in place and an experienced site team capable of working to tight schedules without affecting the final product. Finnegan Flooring Limited has a labour force of skilled tradesmen — all CSCS card holders. We will carry out work on any project, from a small extension with a local builder to a brand-new school with a nationally recognised construction firm.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="about-stat">
+          <div class="v">28<sup>yrs</sup></div>
+          <div class="l">Trading since 1997</div>
+        </div>
+        <div class="about-stat">
+          <div class="v">100<sup>%</sup></div>
+          <div class="l">CSCS carded crew</div>
+        </div>
+        <div class="about-stat">
+          <div class="v">4<sup>sys</sup></div>
+          <div class="l">Screed specialisms</div>
+        </div>
+        <div class="about-stat">
+          <div class="v">15+</div>
+          <div class="l">National housebuilders</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACCREDITATIONS ============ -->
+<section class="section" id="accreditations">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">
+        <span class="bar"></span>
+        <span>03 — Accreditations</span>
+      </div>
+      <div>
+        <h2 class="section-title">Vetted, audited &amp; <span class="accent">certified.</span></h2>
+        <p class="section-lede">Independently assessed by the bodies that matter to main contractors, public-sector clients and tier-one housebuilders.</p>
+      </div>
+    </div>
+
+    <div class="accred-grid">
+      <div class="accred reveal">
+        <div class="accred-logo"><div class="glyph-chas">CHAS</div></div>
+        <div>
+          <h4 class="accred-name">CHAS Accredited</h4>
+          <div class="accred-sub">Contractor Health &amp; Safety</div>
+        </div>
+        <a href="#">View Certificate →</a>
+      </div>
+      <div class="accred reveal">
+        <div class="accred-logo">
+          <div class="glyph-cline">
+            <div class="cl-bar"></div>
+            <div class="cl-text">CONSTRUCTION<br/>LINE<small>Gold Member</small></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="accred-name">Constructionline</h4>
+          <div class="accred-sub">Procurement Pre-Qualification</div>
+        </div>
+        <a href="#">View Certificate →</a>
+      </div>
+      <div class="accred reveal">
+        <div class="accred-logo"><div class="glyph-smas">SMAS</div></div>
+        <div>
+          <h4 class="accred-name">SMAS Worksafe</h4>
+          <div class="accred-sub">Safety Management Advisory</div>
+        </div>
+        <a href="#">View Certificate →</a>
+      </div>
+      <div class="accred reveal">
+        <div class="accred-logo">
+          <div class="glyph-ssip">
+            <div class="ring"></div>
+            <div class="t">SSIP<small>Member Scheme</small></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="accred-name">SSIP Member</h4>
+          <div class="accred-sub">Safety Schemes in Procurement</div>
+        </div>
+        <a href="#">View Certificate →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="section" id="projects" style="background: var(--bg-2);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">
+        <span class="bar"></span>
+        <span>04 — Notable Projects</span>
+      </div>
+      <div>
+        <h2 class="section-title">A selection of recent <span class="accent">work.</span></h2>
+        <p class="section-lede">From hospitality and education to defence and leisure — screed laid where it has to perform.</p>
+      </div>
+    </div>
+
+    <div class="projects-list">
+      <div class="project-row reveal">
+        <div class="pr-num">N/01</div>
+        <div class="pr-name">Harbour Hotel &amp; Ocean Village, Alexandra Wharf</div>
+        <div class="pr-loc">Southampton</div>
+        <div class="pr-sector">Hospitality</div>
+        <div class="pr-arrow">→</div>
+      </div>
+      <div class="project-row reveal">
+        <div class="pr-num">N/02</div>
+        <div class="pr-name">Butlin's Splash</div>
+        <div class="pr-loc">Bognor Regis</div>
+        <div class="pr-sector">Leisure</div>
+        <div class="pr-arrow">→</div>
+      </div>
+      <div class="project-row reveal">
+        <div class="pr-num">N/03</div>
+        <div class="pr-name">National Maritime Systems Centre</div>
+        <div class="pr-loc">Portsmouth</div>
+        <div class="pr-sector">Defence</div>
+        <div class="pr-arrow">→</div>
+      </div>
+      <div class="project-row reveal">
+        <div class="pr-num">N/04</div>
+        <div class="pr-name">Bitterne Park School</div>
+        <div class="pr-loc">Southampton</div>
+        <div class="pr-sector">Education</div>
+        <div class="pr-arrow">→</div>
+      </div>
+      <div class="project-row reveal">
+        <div class="pr-num">N/05</div>
+        <div class="pr-name">King Richard's School</div>
+        <div class="pr-loc">Paulsgrove</div>
+        <div class="pr-sector">Education</div>
+        <div class="pr-arrow">→</div>
+      </div>
+      <div class="project-row reveal">
+        <div class="pr-num">N/06</div>
+        <div class="pr-name">London Academy of Music &amp; Dramatic Art</div>
+        <div class="pr-loc">Hammersmith</div>
+        <div class="pr-sector">Education</div>
+        <div class="pr-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENTS ============ -->
+<section class="section clients" id="clients">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">
+        <span class="bar"></span>
+        <span>05 — Clients</span>
+      </div>
+      <div>
+        <h2 class="section-title">Trusted by the names <span class="accent">building Britain.</span></h2>
+        <p class="section-lede">Long-standing relationships with national housebuilders and tier-one main contractors.</p>
+      </div>
+    </div>
+
+    <div class="clients-grid">
+      <div class="client"><span class="client-idx">01</span><span class="client-name">Barratt Homes</span></div>
+      <div class="client"><span class="client-idx">02</span><span class="client-name">David Wilson Homes</span></div>
+      <div class="client"><span class="client-idx">03</span><span class="client-name">Bellway Homes</span></div>
+      <div class="client"><span class="client-idx">04</span><span class="client-name">VolkerFitzpatrick</span></div>
+      <div class="client"><span class="client-idx">05</span><span class="client-name">Alfred Homes</span></div>
+      <div class="client"><span class="client-idx">06</span><span class="client-name">Redrow Homes</span></div>
+      <div class="client"><span class="client-idx">07</span><span class="client-name">Galliford Try</span></div>
+      <div class="client"><span class="client-idx">08</span><span class="client-name">Countryside Developments</span></div>
+      <div class="client"><span class="client-idx">09</span><span class="client-name">Kier Southern</span></div>
+      <div class="client"><span class="client-idx">10</span><span class="client-name">Taylor Wimpey</span></div>
+      <div class="client"><span class="client-idx">11</span><span class="client-name">Elivia Homes</span></div>
+      <div class="client"><span class="client-idx">12</span><span class="client-name">Balfour Beatty</span></div>
+      <div class="client"><span class="client-idx">13</span><span class="client-name">Willmott Dixon</span></div>
+      <div class="client"><span class="client-idx">14</span><span class="client-name">Knights Brown</span></div>
+      <div class="client"><span class="client-idx">15</span><span class="client-name">Hampshire Homes</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT (dark) ============ -->
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">
+        <span class="bar"></span>
+        <span>06 — Contact</span>
+      </div>
+      <div>
+        <h2 class="section-title">Got a programme? <br/><span class="accent">Let's pour.</span></h2>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="label-col" style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; color:var(--on-dark-mute); text-transform:uppercase; padding-top:14px; display:flex; flex-direction:column; gap:8px;">
+        <span style="width:40px; height:1px; background:var(--on-dark);"></span>
+        <span>Enquiries</span>
+      </div>
+
+      <div class="contact-col reveal">
+        <h4>By Phone</h4>
+        <a href="tel:01794527090" class="contact-big">01794 527090</a>
+        <div class="contact-label" style="margin-top:36px;">By Email</div>
+        <a href="mailto:info@finneganflooring.co.uk" class="contact-big" style="font-size: clamp(20px, 2.2vw, 28px);">info@finneganflooring.co.uk</a>
+      </div>
+
+      <div class="contact-col reveal">
+        <h4>Head Office</h4>
+        <address class="contact-address">
+          <strong>Finnegan Flooring Limited</strong>
+          Unit 4 Fernacre Business Park<br/>
+          Budds Lane Industrial Estate<br/>
+          Budds Lane<br/>
+          Romsey<br/>
+          Hampshire<br/>
+          <span style="color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; margin-top: 6px; display: inline-block;">SO51 0HA</span>
+        </address>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <div class="cta-text">Send a drawing, a programme or a quick ask — we'll come back within the working day.</div>
+      <a href="mailto:info@finneganflooring.co.uk?subject=Project enquiry" class="cta-btn">
+        Start an enquiry
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>© 1997–2026 Finnegan Flooring Limited</div>
+    <div>Romsey · Hampshire · United Kingdom</div>
+    <div>v2 prototype</div>
+  </div>
+</footer>
+
+<!-- Tweaks -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" data-presets="env,react">
+  const { useEffect } = React;
+
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": "concrete",
+    "accentHue": 40,
+    "displayFont": "Space Grotesk",
+    "bodyFont": "Inter",
+    "showGrain": true,
+    "headline": "Floors that set the standard for everything built on top."
+  }/*EDITMODE-END*/;
+
+  const PALETTES = {
+    concrete: { bg: '#efeae0', bg2: '#e6e0d3', ink: '#14130f', line: '#b9b1a0', lineDim: '#d6cfbf', dark: '#14130f', dark2: '#1c1a15', onDark: '#efeae0' },
+    slate:    { bg: '#e8e8ea', bg2: '#dcdde0', ink: '#0e1116', line: '#a5a8ad', lineDim: '#c8cacf', dark: '#0e1116', dark2: '#171b21', onDark: '#e8e8ea' },
+    oxide:    { bg: '#f1ece4', bg2: '#e6dfd1', ink: '#1a1410', line: '#b5a895', lineDim: '#d3c8b3', dark: '#1a1410', dark2: '#241c16', onDark: '#f1ece4' },
+    bone:     { bg: '#f4f1ec', bg2: '#ebe7df', ink: '#181614', line: '#bbb4a7', lineDim: '#d8d1c2', dark: '#181614', dark2: '#221f1b', onDark: '#f4f1ec' }
+  };
+
+  function applyTweaks(t) {
+    const root = document.documentElement;
+    const p = PALETTES[t.palette] || PALETTES.concrete;
+    root.style.setProperty('--bg', p.bg);
+    root.style.setProperty('--bg-2', p.bg2);
+    root.style.setProperty('--ink', p.ink);
+    root.style.setProperty('--line', p.line);
+    root.style.setProperty('--line-dim', p.lineDim);
+    root.style.setProperty('--dark', p.dark);
+    root.style.setProperty('--dark-2', p.dark2);
+    root.style.setProperty('--on-dark', p.onDark);
+    root.style.setProperty('--accent', `oklch(0.58 0.15 ${t.accentHue})`);
+    // Fonts
+    document.querySelectorAll('.display, h1, h2, h3, h4, .section-title, .brand, .brand-name, .hero-meta-item .v, .service h3, .pr-name, .client-name, .accred-name, .contact-big, .about-body p:not(.small), .cta-text, .about-stat .v')
+      .forEach(el => { /* no-op, handled below via stylesheet */ });
+    const styleId = '__tweak_fonts';
+    let s = document.getElementById(styleId);
+    if (!s) { s = document.createElement('style'); s.id = styleId; document.head.appendChild(s); }
+    s.textContent = `
+      h1, h2, h3, h4, .section-title, .brand-name, .hero-meta-item .v, .service h3, .pr-name, .client-name, .accred-name, .contact-big, .about-body p:not(.small), .cta-text, .about-stat .v, .brand, .glyph-chas, .glyph-cline .cl-text, .glyph-smas, .glyph-ssip .t, .ticker span, .cta-btn { font-family: '${t.displayFont}', sans-serif !important; }
+      body, p, .hero-sub, .section-lede, .service p, .contact-address, .nav-links a, .about-body p.small { font-family: '${t.bodyFont}', system-ui, sans-serif !important; }
+    `;
+    // Grain
+    document.body.style.setProperty('--grain-opacity', t.showGrain ? '1' : '0');
+    const grainStyleId = '__grain';
+    let gs = document.getElementById(grainStyleId);
+    if (!gs) { gs = document.createElement('style'); gs.id = grainStyleId; document.head.appendChild(gs); }
+    gs.textContent = `body::before { display: ${t.showGrain ? 'block' : 'none'}; }`;
+
+    // Headline
+    const h1 = document.querySelector('.hero h1');
+    if (h1 && t.headline) {
+      // preserve accent span behavior — split on " for " or just replace text but keep accent if found
+      const txt = t.headline;
+      // Find the longest contiguous word group to color (last clause after comma or "for")
+      const m = txt.match(/(.*?)(set the standard|the standard|.{8,})$/i);
+      h1.innerHTML = `${txt.replace(/(set the standard|standard|finnegan)/i, '<span class="accent">$1</span>')}`;
+      if (!h1.querySelector('.accent')) {
+        // fall back: color last 3 words
+        const words = txt.split(' ');
+        const tail = words.slice(-3).join(' ');
+        const head = words.slice(0, -3).join(' ');
+        h1.innerHTML = `${head} <span class="accent">${tail}</span>`;
+      }
+    }
+  }
+
+  function App() {
+    const { Tweaks } = window;
+    if (!Tweaks) return null;
+    const { TweaksPanel, TweakSection, TweakRadio, TweakSlider, TweakSelect, TweakToggle, TweakText, useTweaks } = Tweaks;
+    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+    useEffect(() => { applyTweaks(t); }, [t]);
+
+    return (
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="Palette">
+          <TweakSelect label="Tone" value={t.palette} options={[
+            {value:'concrete', label:'Concrete cream'},
+            {value:'slate', label:'Slate grey'},
+            {value:'oxide', label:'Oxide warm'},
+            {value:'bone', label:'Bone neutral'},
+          ]} onChange={v => setTweak('palette', v)} />
+          <TweakSlider label="Accent hue" value={t.accentHue} min={0} max={360} step={5} onChange={v => setTweak('accentHue', v)} />
+        </TweakSection>
+        <TweakSection title="Typography">
+          <TweakSelect label="Display font" value={t.displayFont} options={[
+            {value:'Space Grotesk', label:'Space Grotesk'},
+            {value:'Inter', label:'Inter'},
+            {value:'JetBrains Mono', label:'JetBrains Mono'},
+          ]} onChange={v => setTweak('displayFont', v)} />
+          <TweakSelect label="Body font" value={t.bodyFont} options={[
+            {value:'Inter', label:'Inter'},
+            {value:'Space Grotesk', label:'Space Grotesk'},
+          ]} onChange={v => setTweak('bodyFont', v)} />
+        </TweakSection>
+        <TweakSection title="Surface">
+          <TweakToggle label="Paper grain" value={t.showGrain} onChange={v => setTweak('showGrain', v)} />
+        </TweakSection>
+        <TweakSection title="Copy">
+          <TweakText label="Headline" value={t.headline} onChange={v => setTweak('headline', v)} />
+        </TweakSection>
+      </TweaksPanel>
+    );
+  }
+
+  // Mount tweaks panel
+  const mount = document.createElement('div');
+  document.body.appendChild(mount);
+  ReactDOM.createRoot(mount).render(<App />);
+
+  // Apply defaults immediately even before tweaks panel mounts
+  applyTweaks(TWEAK_DEFAULTS);
+</script>
+
+<script>
+  // Nav scrolled state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 12) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '-50px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
