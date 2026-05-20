@@ -7,7 +7,7 @@ A modern single-page redesign prototype for Finnegan Flooring Limited.
 This repository is configured for GitHub Pages. Once Pages is enabled
 (Settings → Pages → Source: `main` / `(root)`), the site is served at:
 
-`[https://ryan684.github.io.github.io/finnegan-flooring-website/](https://ryan684.github.io/finnegan-flooring-website/)`
+[https://ryan684.github.io.github.io/finnegan-flooring-website/](https://ryan684.github.io/finnegan-flooring-website/)
 
 ## Local preview
 
